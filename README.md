@@ -1,63 +1,82 @@
 # Chokepoint Atlas
 
-`Chokepoint Atlas` is a reusable research skill for AI supply-chain analysis.
+`Chokepoint Atlas` is a reusable research skill for finding real bottlenecks in AI infrastructure supply chains.
 
-说人话一点：
+## 中文
 
-它不是让 agent 上来就给你一堆股票代码。
+**Chokepoint Atlas** 是一个面向 AI 基础设施研究的 Agent Skill。
 
-它是让 agent 先回答一个更重要的问题：
+它不是上来就给股票代码的选股 prompt。  
+它更像一个研究助手，专门帮你做一件事：
 
-**如果 AI 继续扩张，最先卡住的会是哪一环？**
+**把热门 AI 叙事拆成真实供应链，再找出最容易卡脖子的那一层。**
 
-然后再顺着这条线，去找值得继续研究的公司。
+核心流程很简单：
 
-## What This Skill Is For
+1. 先确认终端系统
+2. 再拆供应链栈
+3. 找真正的瓶颈
+4. 用财报、研报、产业新闻交叉验证
+5. 先给方向，再给名字
 
-Use it when you want an agent to:
+它适合拿来研究：
 
-- break a big AI story into a real supply chain
-- find the narrowest bottleneck in that chain
-- check whether that bottleneck is real or just market narrative
-- tell you which layer matters first
-- give company names only after the thesis is clear
+- AI 光通信
+- 封装与测试
+- 数据中心供电
+- 液冷与热管理
+- 机器人供应链
+- 其他 AI 基础设施方向
 
-Typical questions:
+它不适合：
 
-- What is the next AI infrastructure bottleneck?
-- Is optical / packaging / power / cooling the more important lane now?
-- Which companies sit closest to the constraint?
-- Which names are real executors, and which are just optionality bets?
+- 直接要短线代码
+- 只想看情绪和热度
+- 不想看逻辑、只想抄答案
 
-## What It Does
+一句话说：
 
-The workflow is fixed:
+**Chokepoint Atlas 不是帮你追热点，而是帮你先找到真正会堵车的地方。**
 
-1. Start from a real demand wave
-2. Draw the stack
-3. Find the bottleneck
-4. Verify it with earnings, reports, and industry news
-5. Give the direction first
-6. Give company names only if you ask for them
+## English
 
-This order is the whole point of the product.
+**Chokepoint Atlas** is an agent skill for AI infrastructure research.
 
-## What You Get Back
+It is not a stock-picking prompt that jumps straight to tickers.  
+It is a research workflow designed to do one thing well:
 
-The skill usually answers in 3 layers:
+**turn broad AI narratives into real supply-chain maps, then identify the layer most likely to become a bottleneck.**
 
-1. **Direction first**  
-   Which part of the supply chain matters most right now, and why.
+The workflow is straightforward:
 
-2. **Watchlist second**  
-   Grouped names such as proven executors, pure bottlenecks, second-order beneficiaries, and early optionality.
+1. Define the end system
+2. Map the supply-chain stack
+3. Find the real constraint
+4. Cross-check with earnings, reports, and industry news
+5. Output the direction first, then candidate names
 
-3. **Single-name deep dive**  
-   If you want to drill into one company, it can break down what that company actually does and what could break the thesis.
+It is useful for researching:
 
-## Quick Install
+- AI optical interconnect
+- packaging and testing
+- datacenter power delivery
+- liquid cooling and thermal management
+- humanoid robotics supply chains
+- other AI infrastructure lanes
 
-If your agent supports GitHub skill install, use:
+It is not meant for:
+
+- instant ticker dumping
+- momentum-only workflows
+- users who want answers without thesis building
+
+In one line:
+
+**Chokepoint Atlas does not help you chase noise. It helps you find where the system will actually break first.**
+
+## Install
+
+Install the skill as `ai-supply-chain-bottleneck-hunter`:
 
 ```bash
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
@@ -78,60 +97,14 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
 
 Then restart Codex so the new skill is picked up.
 
-## How To Ask It
+## Repository Contents
 
-Example 1: direction only
-
-```text
-Use $ai-supply-chain-bottleneck-hunter.
-Tell me the next AI infrastructure bottleneck.
-Start with direction only. Do not give me names yet.
-```
-
-Example 2: names after thesis
-
-```text
-Continue with $ai-supply-chain-bottleneck-hunter.
-Now give me names, grouped into:
-- proven executors
-- pure bottlenecks
-- second-order beneficiaries
-- early optionality
-```
-
-Example 3: one company
-
-```text
-Use $ai-supply-chain-bottleneck-hunter to analyze AXTI.
-Tell me where it sits in the stack, why it matters, and what would break the thesis.
-```
-
-## Who This Is For
-
-Good fit:
-
-- AI infrastructure researchers
-- people building repeatable agent workflows
-- anyone who wants thesis first and tickers second
-
-Bad fit:
-
-- users who only want instant stock picks
-- momentum-only workflows
-- "just tell me what to buy" prompts
-
-## Key Files
-
-- [SKILL.md](./SKILL.md): the skill itself
-- [Chinese Product Description](./docs/PRODUCT_CN.md)
-- [English Product Description](./docs/PRODUCT_EN.md)
-- [Product Manual](./references/product-manual.md)
-- [Infographic Copy](./docs/INFOGRAPHIC_COPY.md)
+- [SKILL.md](./SKILL.md): the main skill
+- [中文产品说明](./docs/PRODUCT_CN.md)
+- [English product description](./docs/PRODUCT_EN.md)
+- [Product manual](./references/product-manual.md)
+- [Infographic copy](./docs/INFOGRAPHIC_COPY.md)
 
 ## Product Snapshot
 
 ![AI Bottleneck Hunter infographic](./assets/ai-bottleneck-hunter-infographic.png)
-
-## License
-
-No explicit open-source license is included yet. Add one if you want reuse terms to be formalized.
