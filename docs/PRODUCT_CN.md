@@ -175,7 +175,7 @@
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
   --repo qiuqiubuchongle-cloud/chokepoint-atlas \
   --path . \
-  --name ai-supply-chain-bottleneck-hunter
+  --name choke-atlas
 ```
 
 如果默认下载方式报错，再用这个：
@@ -184,7 +184,7 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
   --repo qiuqiubuchongle-cloud/chokepoint-atlas \
   --path . \
-  --name ai-supply-chain-bottleneck-hunter \
+  --name choke-atlas \
   --method git
 ```
 
@@ -197,7 +197,7 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
 ### 问法 1：只要方向，不要名字
 
 ```text
-Use $ai-supply-chain-bottleneck-hunter.
+Use $choke-atlas.
 告诉我下一个 AI 基础设施瓶颈可能在哪。
 先只讲方向，不要先给股票代码。
 ```
@@ -205,7 +205,7 @@ Use $ai-supply-chain-bottleneck-hunter.
 ### 问法 2：逻辑讲完，再给名单
 
 ```text
-Continue with $ai-supply-chain-bottleneck-hunter.
+Continue with $choke-atlas.
 现在给我几个公司，分成：
 1. 成熟执行者
 2. 真瓶颈公司
@@ -216,7 +216,7 @@ Continue with $ai-supply-chain-bottleneck-hunter.
 ### 问法 3：单独看一家公司
 
 ```text
-Use $ai-supply-chain-bottleneck-hunter to analyze AXTI.
+Use $choke-atlas to analyze AXTI.
 告诉我它在供应链里处于哪一层，为什么重要，什么情况会打脸。
 ```
 

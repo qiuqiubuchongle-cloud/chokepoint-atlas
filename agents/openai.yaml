@@ -1,4 +1,4 @@
 interface:
-  display_name: "AI Bottleneck Hunter"
-  short_description: "Maps AI supply stacks, bottlenecks, and names"
-  default_prompt: "Use $ai-supply-chain-bottleneck-hunter to map an AI infrastructure stack, find the real bottleneck, validate it with reports/news, and only then suggest candidate names."
+  display_name: "Choke Atlas"
+  short_description: "Maps AI/crypto bottlenecks, evidence grades, live setups, and names"
+  default_prompt: "Use $choke-atlas to map an AI or crypto market thesis, find the real bottleneck, grade the evidence, check current market data, and select candidate stocks/assets with scenario-based entry/exit zones."
