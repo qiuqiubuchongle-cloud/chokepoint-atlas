@@ -58,3 +58,42 @@ If the user asks to "turn this into a skill", output:
 - escalation rules
 
 Keep it procedural. Avoid essay style.
+
+## 5. V2 Evidence Memo
+
+Use this when the user wants a 2.0-style answer.
+
+Required:
+
+1. one-sentence thesis
+2. stack summary
+3. primary bottleneck
+4. evidence ladder
+5. weakest assumption
+6. lane score
+7. next catalyst checks
+
+## 6. V2 Graph Card
+
+Use this when the user wants a relationship map.
+
+Required:
+
+- end system
+- critical components
+- company map
+- evidence links
+- catalyst links
+
+## 7. V2 Ranked Lane Table
+
+Use when comparing multiple lanes.
+
+Suggested columns:
+
+- lane
+- bottleneck
+- strongest evidence
+- weakest assumption
+- lane score
+- next catalyst

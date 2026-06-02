@@ -12,16 +12,25 @@ Use this skill when the user wants to:
 - turn scattered reports, earnings calls, and industry news into a structured bottleneck thesis
 - identify the next directional lane first, then optionally drill into smaller-cap names
 - create or use a reusable "research agent skill" for bottleneck hunting
+- upgrade the workflow into a 2.0 system with evidence ranking, graph mapping, catalyst tracking, and lane scoring
 
 This skill mirrors their research stance and question design. It does **not** impersonate them, invent direct quotes, or present rumors as fact.
 
 For a full end-user manual, read [references/product-manual.md](references/product-manual.md).
 
+For 2.0-style outputs:
+
+- evidence ranking: [references/evidence-ladder.md](references/evidence-ladder.md)
+- graph outputs: [references/graph-schema.md](references/graph-schema.md)
+- lane / name prioritization: [references/scoring-framework.md](references/scoring-framework.md)
+- catalyst monitoring: [references/catalyst-watch.md](references/catalyst-watch.md)
+- output templates: [references/output-formats-v2.md](references/output-formats-v2.md)
+
 ## Core Model
 
 Treat the market as a physical system, not a ticker feed.
 
-The workflow is:
+The base workflow is:
 
 1. start from a supertrend
 2. map the supply chain or "stack"
@@ -30,11 +39,19 @@ The workflow is:
 5. output a directional lane first
 6. only after that, offer candidate names and weighting logic
 
+Version 2.0 extends this with:
+
+7. rank the evidence
+8. map the relationships as a graph
+9. score the lane and the names
+10. track catalysts over time
+
 Default behavior:
 
 - do **not** start by naming stocks
 - do **not** ask AI "what should I buy"
 - do use AI to expand search radius, map dependencies, summarize earnings, cross-check bottlenecks, and generate falsification tests
+- do use structured evidence tags and graph edges when the user wants a deeper or reusable output
 
 ## Two Lenses
 
@@ -91,6 +108,8 @@ What to do:
   - their cross-reading of multiple companies
 - Do **not** copy their wording, slogans, or long-form expressions.
 - Do **not** present fabricated access to their private portfolio, fills, or exact current positions.
+- Do **not** turn weak evidence into hard claims just to make the graph look cleaner.
+- Do **not** use scoring as fake precision; explain why the score exists.
 
 ## Workflow
 
@@ -101,6 +120,13 @@ Treat the workflow as a staged dialogue:
 - L3: evidence chain
 - L4: directional lane
 - L5: lower-market-cap drilldown only after follow-up
+
+Version 2.0 adds optional overlays:
+
+- E1: evidence ladder
+- G1: graph map
+- S1: lane / name scoring
+- C1: catalyst watch
 
 Do not dump all five layers in one response unless the user explicitly asks for a full memo.
 
@@ -172,6 +198,8 @@ Also ask:
 
 If needed, read [references/question-ladder.md](references/question-ladder.md).
 
+If the user wants a graph-style output, load [references/graph-schema.md](references/graph-schema.md).
+
 ### Step 3: Hunt the Bottleneck
 
 Now force the real question:
@@ -232,6 +260,13 @@ Use this evidence hierarchy:
 
 If multiple companies describe the same constraint from different positions in the chain, say so explicitly. That is higher quality than a single-source story.
 
+If the user wants a 2.0 answer, load [references/evidence-ladder.md](references/evidence-ladder.md) and tag major claims explicitly as:
+
+- `Confirmed`
+- `Inferred`
+- `Weak`
+- `Needs verification`
+
 ### Step 5: Output the Direction First
 
 Default output is a direction, not a stock list.
@@ -245,6 +280,8 @@ The first answer should say:
 - what downstream / upstream companies would feel it first
 
 This is the main output layer.
+
+If the user asks for deeper prioritization, load [references/scoring-framework.md](references/scoring-framework.md) and output a lane score.
 
 ### Step 6: Only Then Offer Candidate Names
 

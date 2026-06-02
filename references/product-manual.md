@@ -26,6 +26,13 @@ It is **not**:
 - a momentum scanner
 - a one-shot "tell me what to buy" prompt
 
+Version 2.0 extends the product from a research workflow into a small research system:
+
+- evidence ranking
+- relationship mapping
+- lane / name prioritization
+- catalyst tracking
+
 ## 2. Core Promise
 
 This skill forces research to happen in the right order:
@@ -39,6 +46,13 @@ This skill forces research to happen in the right order:
 7. single-name underwrite
 
 That order is the product.
+
+In 2.0, the product also forces a second order of discipline:
+
+1. rank the proof
+2. map the dependencies
+3. score the lane
+4. track what could confirm or break it next
 
 ## 3. Who Should Use It
 
@@ -60,6 +74,8 @@ Do not use it for:
 ## 4. Supported Input Modes
 
 This skill supports four input modes.
+
+In version 2.0, it also supports a fifth mode.
 
 ### Mode A: Raw Theme
 
@@ -110,9 +126,30 @@ Expected behavior:
 - explain why it matters
 - separate fact, inference, and speculation
 
+### Mode E: System Research
+
+Example:
+
+`Run this as a 2.0 system. Give me evidence levels, a relationship map, and a lane score.`
+
+Expected behavior:
+
+- keep the normal thesis workflow
+- add evidence tags
+- add a graph-oriented dependency map
+- add a lane score
+- add next catalysts
+
 ## 5. Output Layers
 
 This skill has three output layers.
+
+Version 2.0 adds four optional overlays:
+
+- evidence ladder
+- graph card
+- lane score
+- catalyst watch
 
 ### Layer 1: Directional Lane
 
@@ -136,6 +173,12 @@ Required sections:
 
 This layer should **not** start with stock names.
 
+If the user asks for a 2.0 version, this layer should also include:
+
+- evidence tag on the key claim
+- one weakest assumption
+- one next catalyst
+
 ### Layer 2: Candidate Watchlist
 
 Use only after:
@@ -158,6 +201,11 @@ For each name:
 - what is still weak
 - key risk
 
+In 2.0, optionally add:
+
+- name score
+- catalyst sensitivity
+
 ### Layer 3: Single-Name Underwrite
 
 Use when the user asks for one company in depth.
@@ -170,6 +218,12 @@ Required sections:
 - evidence quality
 - ramp / revenue timing
 - failure cases
+
+In 2.0, also add:
+
+- strongest proof node
+- graph position
+- next catalyst
 
 ## 6. Required Response Order
 
@@ -192,6 +246,11 @@ the skill should still do this:
 - then candidate names
 
 It must not jump straight to ticker spam.
+
+In 2.0, it must also avoid:
+
+- treating a weak source as graph proof
+- presenting score totals without dimension-level explanation
 
 ## 7. Research Standards
 
@@ -217,6 +276,15 @@ Every strong answer should say:
 - what is inferred
 - what is speculative
 
+In 2.0, every strong answer should also say:
+
+- which claim is `Confirmed`
+- which claim is `Inferred`
+- which claim is `Weak`
+- which claim `Needs verification`
+
+Read [evidence-ladder.md](evidence-ladder.md) when the user wants this structure.
+
 ## 8. Research Questions This Skill Must Ask
 
 At minimum, the skill should pressure-test these questions:
@@ -234,6 +302,12 @@ At minimum, the skill should pressure-test these questions:
 
 For the full question sequence, read [question-ladder.md](question-ladder.md).
 
+For graph outputs, read [graph-schema.md](graph-schema.md).
+
+For scoring outputs, read [scoring-framework.md](scoring-framework.md).
+
+For time-based follow-up, read [catalyst-watch.md](catalyst-watch.md).
+
 ## 9. Positioning Logic
 
 This skill should treat names differently by maturity.
@@ -244,6 +318,14 @@ Default logic:
 - bottleneck suppliers: high value if the evidence is hard
 - early disruptors: smaller weight, more validation required
 - optionality names: mention upside, but make risk explicit
+
+In 2.0, ranking should use:
+
+- Constraint Score
+- Evidence Score
+- Consensus Score
+- Mispricing Score
+- Catalyst Score
 
 Never present early-stage optionality names as if they deserve the same confidence as proven executors.
 
@@ -273,7 +355,18 @@ What not to borrow:
 
 For more detail, read [style-and-voice.md](style-and-voice.md).
 
-## 11. Failure Modes
+## 11. Version 2.0 Deliverables
+
+When the user explicitly asks for a 2.0 answer, produce one or more of:
+
+1. Evidence Memo
+2. Graph Card
+3. Ranked Lane Table
+4. Catalyst Watch
+
+Use [output-formats-v2.md](output-formats-v2.md) for the exact structure.
+
+## 12. Failure Modes
 
 This skill is failing if it does any of these:
 
@@ -285,7 +378,7 @@ This skill is failing if it does any of these:
 - uses generic LLM language instead of concrete industrial reasoning
 - force-acts like Serenity or Crux instead of borrowing only their research habits
 
-## 12. Example Invocations
+## 13. Example Invocations
 
 ### Example 1: Direction First
 
@@ -318,7 +411,7 @@ Expected output:
 - evidence quality
 - main failure cases
 
-## 13. Hand-Off Rule
+## 14. Hand-Off Rule
 
 If this skill is being given to another agent, tell that agent:
 
