@@ -117,6 +117,188 @@
 
 如果你继续追问，它才会给你公司名单。
 
+## 现在这个产品已经能跑什么
+
+除了对话式 skill，现在仓库里已经补了一个 **本地可跑的 MVP**。
+
+你可以把它理解成：
+
+**先把研究结果整理成标准输入，再一键生成整套研究包。**
+
+目前能直接产出的文件包括：
+
+- `research_pack.json`
+- `quick_scan.md`
+- `evidence_memo.md`
+- `graph.json`
+- `graph.mmd`
+- `graph_mermaid.md`
+- `graph_card.md`
+- `scorecard.json`
+- `validation_report.json`
+- `catalyst_watch.md`
+
+这意味着它已经不只是“会回答问题”。
+
+它开始具备一点真正产品的味道了：
+
+- 有输入格式
+- 有统一输出
+- 有研究包沉淀
+- 有图谱和评分底稿
+
+## 本地怎么跑
+
+仓库里已经带了一个 demo 输入：
+
+`examples/ai_factory_lane_input.json`
+
+直接运行：
+
+```bash
+python3 scripts/build_research_pack.py \
+  --input examples/ai_factory_lane_input.json \
+  --output out/ai_factory_demo
+```
+
+跑完之后，你会在输出目录看到整套研究包：
+
+`out/ai_factory_demo/`
+
+这个 demo 目前演示的是：
+
+- 终端系统：`NVIDIA DSX AI Factory`
+- 研究方向：`HBM 测试 + 先进封装支撑工具`
+- 输出内容：证据分层、关系图、优先级、催化剂
+
+另外现在还多了两个比较实用的小升级：
+
+- 自动做输入校验，生成 `validation_report.json`
+- 自动把 `graph.json` 转成 Mermaid，可直接继续做图
+
+## 现在还支持多条 lane 横向比较
+
+如果你不是只研究一条线，而是想比较：
+
+- 哪条线更值得深挖
+- 哪条线证据更硬
+- 哪条线只是热闹，哪条线更像真瓶颈
+
+现在可以直接用多 lane compare 入口。
+
+仓库里已经带了一个比较输入：
+
+`examples/lane_compare_input.json`
+
+运行方式：
+
+```bash
+python3 scripts/compare_lanes.py \
+  --input examples/lane_compare_input.json \
+  --output out/lane_compare_demo
+```
+
+它会生成：
+
+- `lane_ranking.json`
+- `lane_details.json`
+- `ranked_lane_table.md`
+- `lane_compare_memo.md`
+
+这一步的意义很大，因为它开始把“研究一条 thesis”升级成“比较多个 thesis”。
+
+## 现在还支持 source bundle 一键流水线
+
+如果你已经有一批原始材料，比如：
+
+- 财报摘要
+- 官方产品页
+- 新闻段落
+- IR 文本
+
+你现在不一定要先手动把它们全改成最终 pack JSON。
+
+仓库里已经补了一个更顺手的入口：
+
+`examples/source_bundle_input.json`
+
+先把这些原始材料整理成一个 source bundle，然后直接运行：
+
+```bash
+python3 scripts/run_source_pipeline.py \
+  --input examples/source_bundle_input.json \
+  --output out/source_pipeline_demo
+```
+
+它会自动帮你分两步输出：
+
+### 第一步：草稿输入
+
+目录：
+
+`out/source_pipeline_demo/01_draft/`
+
+产物：
+
+- `draft_pack_input.json`
+- `extraction_report.json`
+
+这一层做的事是：
+
+- 把 source bundle 里的材料转成结构化 evidence
+- 自动抽一些基础 signal
+- 给公司补一版初始评分字段
+
+### 第二步：最终研究包
+
+目录：
+
+`out/source_pipeline_demo/02_final_pack/`
+
+产物：
+
+- `research_pack.json`
+- `quick_scan.md`
+- `evidence_memo.md`
+- `graph.json`
+- `graph.mmd`
+- `graph_mermaid.md`
+- `graph_card.md`
+- `scorecard.json`
+- `validation_report.json`
+- `catalyst_watch.md`
+
+这条链路的意义特别直接：
+
+**你不用再手动接两次脚本了。**
+
+它已经开始像一个真正的研究流水线，而不是几段分散工具。
+
+## 这个 MVP 适合拿来干嘛
+
+最适合三件事：
+
+### 1. 做研究底稿
+
+先把一个赛道的核心关系整理进 JSON，再让脚本吐出统一结构。
+
+### 2. 给别的 Agent 接手
+
+很多时候问题不是不会研究，而是每个 Agent 产出的格式都不一样。
+
+现在有了统一的 pack 结构，后续不管是写长推、做信息图，还是继续深挖单票，都会顺很多。
+
+### 3. 做后续产品迭代
+
+后面如果要加：
+
+- 新闻抽取
+- 财报抽取
+- 图谱可视化
+- lane 对 lane 比较
+
+都可以直接接在这个 MVP 上面，不用重新推翻。
+
 ## 你会得到什么结果
 
 正常情况下，它会分 3 层输出。

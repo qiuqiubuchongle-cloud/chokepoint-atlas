@@ -1,8 +1,8 @@
-# AI Bottleneck Hunter — Product Description
+# Chokepoint Atlas — Product Description
 
 ## Overview
 
-AI Bottleneck Hunter is a research skill for turning broad AI narratives into structured, evidence-driven supply-chain analysis.
+Chokepoint Atlas is a research skill for turning broad AI narratives into structured, evidence-driven supply-chain analysis.
 
 Most AI investing conversations stop at the obvious names: GPUs, hyperscalers, memory leaders.  
 This skill goes lower in the stack and asks the harder question:
@@ -129,7 +129,7 @@ Good output from this skill should feel like:
 
 ## Bottom Line
 
-AI Bottleneck Hunter is not trying to predict the next meme.  
+Chokepoint Atlas is not trying to predict the next meme.  
 It is trying to answer a more useful question:
 
 **Which small, boring, physical constraint will matter more than the loudest narrative?**

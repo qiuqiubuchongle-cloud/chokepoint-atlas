@@ -1,0 +1,194 @@
+{
+  "lanes": [
+    {
+      "meta": {
+        "pack_id": "ai_factory_test_packaging",
+        "title": "AI factory - HBM test and advanced packaging support",
+        "as_of_date": "2026-06-02"
+      },
+      "thesis": {
+        "supertrend": "AI factory buildout continues to stress memory, packaging, and deployment infrastructure.",
+        "end_system": "NVIDIA DSX AI Factory",
+        "lane": "HBM test and advanced packaging support tools",
+        "thesis_sentence": "Test, inspection, and packaging support tools remain enabling layers before AI factory capacity can scale cleanly.",
+        "bottleneck_call": "HBM-related test throughput and advanced-packaging inspection remain gating layers.",
+        "weakest_assumption": "HBM demand continues translating into packaging and test capex.",
+        "thesis_breaker": "If packaging spend stalls, these support layers de-rate quickly."
+      },
+      "stack_layers": [
+        {"id": "L3", "label": "Cloud and deployment", "items": ["CoreWeave", "Lambda"]},
+        {"id": "L2", "label": "Packaging and assembly", "items": ["Amkor", "OSATs", "hybrid bonding"]},
+        {"id": "L1", "label": "Test and inspection", "items": ["FormFactor", "Camtek", "yield control"]},
+        {"id": "L0", "label": "Core silicon and memory", "items": ["GPU", "HBM"]}
+      ],
+      "bottlenecks": [
+        {
+          "label": "HBM test enablement",
+          "type": "qualification and throughput",
+          "why_it_matters": "HBM supply is unusable without test throughput."
+        }
+      ],
+      "evidence": [
+        {
+          "id": "ev_form",
+          "tier": "A",
+          "entity": "FormFactor",
+          "title": "Q1 2026 results",
+          "summary": "FormFactor cited record DRAM revenue and HBM demand.",
+          "url": "https://investors.formfactor.com/news-releases/news-release-details/formfactor-inc-reports-2026-first-quarter-results"
+        },
+        {
+          "id": "ev_camt",
+          "tier": "A",
+          "entity": "Camtek",
+          "title": "March 2026 Hawk order",
+          "summary": "Camtek announced Hawk orders tied to AI applications.",
+          "url": "https://www.camtek.com/news-and-events/camtek-receives-multiple-hawk-systems-order-of-approximately-25-million-from-an-idm-for-ai-applications/"
+        }
+      ],
+      "companies": [
+        {
+          "ticker": "FORM",
+          "name": "FormFactor",
+          "role": "HBM test enabler",
+          "stack_layer": "L1",
+          "market_cap_usd_b": 9.14,
+          "constraint_score": 4,
+          "evidence_score": 5,
+          "consensus_score": 3,
+          "mispricing_score": 3,
+          "catalyst_score": 4,
+          "risk": "medium"
+        },
+        {
+          "ticker": "CAMT",
+          "name": "Camtek",
+          "role": "advanced packaging inspection",
+          "stack_layer": "L1",
+          "market_cap_usd_b": 7.36,
+          "constraint_score": 4,
+          "evidence_score": 4,
+          "consensus_score": 4,
+          "mispricing_score": 4,
+          "catalyst_score": 4,
+          "risk": "medium-high"
+        },
+        {
+          "ticker": "AMKR",
+          "name": "Amkor",
+          "role": "advanced packaging capacity",
+          "stack_layer": "L2",
+          "market_cap_usd_b": 18.16,
+          "constraint_score": 3,
+          "evidence_score": 4,
+          "consensus_score": 3,
+          "mispricing_score": 2,
+          "catalyst_score": 4,
+          "risk": "medium"
+        }
+      ],
+      "catalysts": [
+        {
+          "label": "Next earnings season",
+          "type": "earnings",
+          "watch_for": "Packaging and HBM demand language"
+        }
+      ]
+    },
+    {
+      "meta": {
+        "pack_id": "ai_factory_power_cooling",
+        "title": "AI factory - power and cooling delivery",
+        "as_of_date": "2026-06-02"
+      },
+      "thesis": {
+        "supertrend": "AI factories are increasingly constrained by physical delivery of power density and thermal management.",
+        "end_system": "AI factory power train",
+        "lane": "Power distribution and liquid cooling",
+        "thesis_sentence": "The more AI clusters turn into physical factories, the more value shifts toward power delivery and cooling systems that can actually bring the site online.",
+        "bottleneck_call": "Power-density upgrades and liquid-cooling deployment become gating layers once compute demand outruns site readiness.",
+        "weakest_assumption": "AI deployment pace remains strong enough that power and cooling stay rate-limiting rather than merely cyclical infrastructure upgrades.",
+        "thesis_breaker": "If data center build schedules slow or thermal density plateaus, urgency in the lane falls."
+      },
+      "stack_layers": [
+        {"id": "L3", "label": "AI factory cloud demand", "items": ["Training clusters", "Inference clusters"]},
+        {"id": "L2", "label": "System deployment", "items": ["Rack-scale systems", "Data center buildout"]},
+        {"id": "L1", "label": "Power and cooling", "items": ["UPS", "switchgear", "liquid cooling", "thermal management"]},
+        {"id": "L0", "label": "Site utilities", "items": ["grid interconnect", "power delivery", "facility upgrades"]}
+      ],
+      "bottlenecks": [
+        {
+          "label": "Power-density delivery",
+          "type": "physical infrastructure",
+          "why_it_matters": "Clusters cannot go live if power and thermal requirements outstrip site readiness."
+        }
+      ],
+      "evidence": [
+        {
+          "id": "ev_vrt",
+          "tier": "B",
+          "entity": "Vertiv",
+          "title": "AI and HPC infrastructure positioning",
+          "summary": "Vertiv highlights AI and HPC power and cooling as core infrastructure needs.",
+          "url": "https://www.vertiv.com/en-us/solutions/industries/ai/"
+        },
+        {
+          "id": "ev_eaton",
+          "tier": "B",
+          "entity": "Eaton",
+          "title": "Data center power management",
+          "summary": "Eaton positions itself around data center power quality and distribution needs.",
+          "url": "https://www.eaton.com/us/en-us/markets/data-centers.html"
+        }
+      ],
+      "companies": [
+        {
+          "ticker": "VRT",
+          "name": "Vertiv",
+          "role": "AI power and cooling systems",
+          "stack_layer": "L1",
+          "market_cap_usd_b": 126.81,
+          "constraint_score": 5,
+          "evidence_score": 3,
+          "consensus_score": 2,
+          "mispricing_score": 2,
+          "catalyst_score": 4,
+          "risk": "medium"
+        },
+        {
+          "ticker": "ETN",
+          "name": "Eaton",
+          "role": "power distribution and quality",
+          "stack_layer": "L1",
+          "market_cap_usd_b": 155.71,
+          "constraint_score": 4,
+          "evidence_score": 3,
+          "consensus_score": 2,
+          "mispricing_score": 2,
+          "catalyst_score": 4,
+          "risk": "medium"
+        },
+        {
+          "ticker": "TT",
+          "name": "Trane Technologies",
+          "role": "thermal management and cooling",
+          "stack_layer": "L1",
+          "market_cap_usd_b": 100.05,
+          "constraint_score": 4,
+          "evidence_score": 3,
+          "consensus_score": 3,
+          "mispricing_score": 2,
+          "catalyst_score": 3,
+          "risk": "medium"
+        }
+      ],
+      "catalysts": [
+        {
+          "label": "AI data center capex updates",
+          "type": "capex",
+          "watch_for": "Faster liquid-cooling and electrical retrofit adoption"
+        }
+      ]
+    }
+  ]
+}

@@ -102,8 +102,74 @@ Then restart Codex so the new skill is picked up.
 - [SKILL.md](./SKILL.md): the main skill
 - [中文产品说明](./docs/PRODUCT_CN.md)
 - [English product description](./docs/PRODUCT_EN.md)
+- [2.0 产品规划](./docs/PRODUCT_PLAN_V2_CN.md)
 - [Product manual](./references/product-manual.md)
 - [Infographic copy](./docs/INFOGRAPHIC_COPY.md)
+
+## Local MVP
+
+This repo now includes a small local MVP that turns structured lane input into a reusable research pack.
+
+Run:
+
+```bash
+python3 scripts/build_research_pack.py \
+  --input examples/ai_factory_lane_input.json \
+  --output out/ai_factory_demo
+```
+
+Generated outputs include:
+
+- `research_pack.json`
+- `quick_scan.md`
+- `evidence_memo.md`
+- `graph.json`
+- `graph.mmd`
+- `graph_mermaid.md`
+- `graph_card.md`
+- `scorecard.json`
+- `validation_report.json`
+- `catalyst_watch.md`
+
+## Lane Comparison
+
+You can also compare multiple lanes in one run:
+
+```bash
+python3 scripts/compare_lanes.py \
+  --input examples/lane_compare_input.json \
+  --output out/lane_compare_demo
+```
+
+Generated outputs include:
+
+- `lane_ranking.json`
+- `lane_details.json`
+- `ranked_lane_table.md`
+- `lane_compare_memo.md`
+
+## Source Pipeline
+
+You can also start from a looser source bundle and let the repo build the draft input plus the final pack:
+
+```bash
+python3 scripts/run_source_pipeline.py \
+  --input examples/source_bundle_input.json \
+  --output out/source_pipeline_demo
+```
+
+This pipeline produces:
+
+- `01_draft/draft_pack_input.json`
+- `01_draft/extraction_report.json`
+- `02_final_pack/research_pack.json`
+- `02_final_pack/quick_scan.md`
+- `02_final_pack/evidence_memo.md`
+- `02_final_pack/graph.json`
+- `02_final_pack/graph.mmd`
+- `02_final_pack/graph_mermaid.md`
+- `02_final_pack/scorecard.json`
+- `02_final_pack/validation_report.json`
 
 ## Product Snapshot
 

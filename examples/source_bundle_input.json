@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "pack_id": "ai_factory_source_bundle_demo",
+    "title": "AI factory source bundle demo",
+    "as_of_date": "2026-06-02",
+    "analyst": "Chokepoint Atlas"
+  },
+  "thesis": {
+    "supertrend": "AI factory buildout is expanding from chips into full-system deployment, stressing packaging, testing, power, and cooling.",
+    "end_system": "NVIDIA DSX AI Factory",
+    "lane": "HBM test and advanced packaging support tools",
+    "thesis_sentence": "Before AI factory capacity scales cleanly, the supporting test and inspection layers have to scale first.",
+    "bottleneck_call": "HBM test throughput and advanced-packaging inspection are still meaningful gating layers.",
+    "weakest_assumption": "AI-related packaging and test spending remains durable instead of fading into a short inventory cycle.",
+    "thesis_breaker": "If packaging expansion slows or HBM demand cools materially, the support-tool layer loses urgency."
+  },
+  "stack_layers": [
+    {
+      "id": "L3",
+      "label": "Cloud and deployment",
+      "items": ["CoreWeave", "Lambda", "enterprise AI factories"]
+    },
+    {
+      "id": "L2",
+      "label": "Packaging and assembly",
+      "items": ["Amkor", "OSAT capacity", "advanced packaging"]
+    },
+    {
+      "id": "L1",
+      "label": "Test and inspection",
+      "items": ["FormFactor probe cards", "Camtek Hawk", "yield control"]
+    },
+    {
+      "id": "L0",
+      "label": "Core silicon and memory",
+      "items": ["GPU", "HBM", "advanced logic"]
+    }
+  ],
+  "bottlenecks": [
+    {
+      "label": "HBM test enablement",
+      "type": "qualification and throughput",
+      "why_it_matters": "HBM output still needs the right test throughput and yield support before it becomes usable supply."
+    },
+    {
+      "label": "Advanced-packaging inspection",
+      "type": "yield and metrology",
+      "why_it_matters": "As AI packaging gets more complex, inspection systems become more important before scale-up."
+    }
+  ],
+  "companies": [
+    {
+      "ticker": "FORM",
+      "name": "FormFactor",
+      "role": "HBM test enabler",
+      "stack_layer": "L1",
+      "market_cap_usd_b": 9.14,
+      "risk": "medium",
+      "constraint_hint": 4,
+      "consensus_hint": 3,
+      "mispricing_hint": 3
+    },
+    {
+      "ticker": "CAMT",
+      "name": "Camtek",
+      "role": "advanced packaging inspection",
+      "stack_layer": "L1",
+      "market_cap_usd_b": 7.36,
+      "risk": "medium-high",
+      "constraint_hint": 4,
+      "consensus_hint": 4,
+      "mispricing_hint": 4
+    },
+    {
+      "ticker": "AMKR",
+      "name": "Amkor",
+      "role": "advanced packaging capacity",
+      "stack_layer": "L2",
+      "market_cap_usd_b": 18.16,
+      "risk": "medium",
+      "constraint_hint": 3,
+      "consensus_hint": 3,
+      "mispricing_hint": 2
+    }
+  ],
+  "sources": [
+    {
+      "entity": "FormFactor",
+      "source_type": "earnings release",
+      "title": "Q1 2026 results",
+      "url": "https://investors.formfactor.com/news-releases/news-release-details/formfactor-inc-reports-2026-first-quarter-results",
+      "body": "FormFactor reported record DRAM revenue and said HBM application demand increased. Management also said the company is shipping in production to all three major HBM manufacturers."
+    },
+    {
+      "entity": "Camtek",
+      "source_type": "company press release",
+      "title": "March 2026 Hawk order announcement",
+      "url": "https://www.camtek.com/news-and-events/camtek-receives-multiple-hawk-systems-order-of-approximately-25-million-from-an-idm-for-ai-applications/",
+      "body": "Camtek announced approximately $25 million of Hawk systems orders tied to AI applications from an IDM customer. The release supports the view that advanced packaging inspection tools are benefitting from AI-related demand."
+    },
+    {
+      "entity": "Amkor",
+      "source_type": "earnings release",
+      "title": "Q1 2026 results",
+      "url": "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-reports-financial-results-first-quarter-2026",
+      "body": "Amkor reported record first-quarter revenue and highlighted demand related to AI-driven advanced packaging. The company also pointed to continued expansion in Arizona."
+    },
+    {
+      "entity": "NVIDIA",
+      "source_type": "official product page",
+      "title": "NVIDIA DSX platform",
+      "url": "https://www.nvidia.com/en-us/data-center/products/dsx/",
+      "body": "NVIDIA presents DSX as a blueprint for full AI factory infrastructure rather than a single server product. The framing pushes research attention toward the broader deployment stack."
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "meta": {
+    "pack_id": "nvidia-dsx-ai-factory-demo",
+    "title": "NVIDIA DSX AI Factory demo lane",
+    "as_of_date": "2026-06-02",
+    "analyst": "Chokepoint Atlas",
+    "horizon": "6-18 months",
+    "geography": "global"
+  },
+  "thesis": {
+    "supertrend": "AI factory buildout is expanding from chips into full-system delivery: racks, power, cooling, packaging, test, and cloud capacity.",
+    "end_system": "NVIDIA DSX AI Factory",
+    "lane": "HBM test and advanced packaging support tools",
+    "thesis_sentence": "The lane worth prioritizing is not just AI chips themselves, but the test, inspection, and advanced-packaging support layers that must scale before AI factory capacity can come online.",
+    "bottleneck_call": "HBM-related test capacity and advanced-packaging inspection remain critical enabling layers ahead of wider AI factory deployment.",
+    "weakest_assumption": "Demand growth in AI servers continues to translate into sustained HBM and advanced packaging capex rather than a short-lived inventory cycle.",
+    "thesis_breaker": "If packaging expansion slows or HBM demand normalizes faster than expected, the support-tool layer may de-rate before broader AI factory buildout matures."
+  },
+  "stack_layers": [
+    {
+      "id": "L6",
+      "label": "AI cloud and deployment",
+      "items": ["CoreWeave", "Lambda", "Nebius", "enterprise inference demand"]
+    },
+    {
+      "id": "L5",
+      "label": "AI factory software",
+      "items": ["WEKA", "VAST", "Red Hat", "cluster scheduling", "storage orchestration"]
+    },
+    {
+      "id": "L4",
+      "label": "Power, cooling, and site delivery",
+      "items": ["Vertiv", "Schneider", "Eaton", "liquid cooling", "power distribution"]
+    },
+    {
+      "id": "L3",
+      "label": "System integration and datacenter buildout",
+      "items": ["Dell", "HPE", "Supermicro", "Foxconn", "Digital Realty", "Equinix"]
+    },
+    {
+      "id": "L2",
+      "label": "Advanced packaging and assembly",
+      "items": ["Amkor", "TSMC CoWoS", "OSAT capacity", "substrates", "hybrid bonding"]
+    },
+    {
+      "id": "L1",
+      "label": "Test, inspection, and metrology",
+      "items": ["FormFactor probe cards", "Camtek inspection systems", "yield and qualification"]
+    },
+    {
+      "id": "L0",
+      "label": "Core silicon and memory",
+      "items": ["GPU", "HBM", "advanced logic", "high-speed interconnect"]
+    }
+  ],
+  "bottlenecks": [
+    {
+      "label": "HBM test enablement",
+      "type": "qualification and throughput",
+      "why_it_matters": "HBM capacity cannot translate into usable supply without probe-card and test throughput at the right yield and timing."
+    },
+    {
+      "label": "Advanced-packaging inspection and metrology",
+      "type": "yield and process control",
+      "why_it_matters": "As packaging complexity rises, inspection systems become gating tools before capacity can scale cleanly."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev_form_q1_2026",
+      "tier": "A",
+      "label": "Confirmed",
+      "source_type": "earnings release",
+      "entity": "FormFactor",
+      "title": "Q1 2026 results",
+      "summary": "FormFactor said DRAM revenue reached a record and noted higher HBM application demand, while serving all three major HBM manufacturers in production.",
+      "url": "https://investors.formfactor.com/news-releases/news-release-details/formfactor-inc-reports-2026-first-quarter-results"
+    },
+    {
+      "id": "ev_camt_march_2026",
+      "tier": "A",
+      "label": "Confirmed",
+      "source_type": "company press release",
+      "entity": "Camtek",
+      "title": "March 2026 Hawk order announcement",
+      "summary": "Camtek announced about $25 million of Hawk systems orders for AI applications from an IDM.",
+      "url": "https://www.camtek.com/news-and-events/camtek-receives-multiple-hawk-systems-order-of-approximately-25-million-from-an-idm-for-ai-applications/"
+    },
+    {
+      "id": "ev_amkr_q1_2026",
+      "tier": "A",
+      "label": "Confirmed",
+      "source_type": "earnings release",
+      "entity": "Amkor",
+      "title": "Q1 2026 results",
+      "summary": "Amkor reported record first-quarter revenue and highlighted AI-driven advanced packaging demand plus continued Arizona expansion.",
+      "url": "https://ir.amkor.com/news-releases/news-release-details/amkor-technology-reports-financial-results-first-quarter-2026"
+    },
+    {
+      "id": "ev_dsx_official",
+      "tier": "A",
+      "label": "Confirmed",
+      "source_type": "official product page",
+      "entity": "NVIDIA",
+      "title": "NVIDIA DSX platform",
+      "summary": "NVIDIA positions DSX as a blueprint for full AI factory infrastructure, not just a server product.",
+      "url": "https://www.nvidia.com/en-us/data-center/products/dsx/"
+    },
+    {
+      "id": "ev_hawk_platform",
+      "tier": "B",
+      "label": "Inferred",
+      "source_type": "official product page",
+      "entity": "Camtek",
+      "title": "Advanced packaging market page",
+      "summary": "Camtek describes Hawk systems as aimed at advanced packaging use cases including HBM and chiplets, supporting its relevance to AI packaging ramps.",
+      "url": "https://www.camtek.com/markets/advanced-packaging/"
+    }
+  ],
+  "companies": [
+    {
+      "ticker": "FORM",
+      "name": "FormFactor",
+      "role": "HBM test enabler",
+      "stack_layer": "L1",
+      "market_cap_usd_b": 9.14,
+      "constraint_score": 4,
+      "evidence_score": 5,
+      "consensus_score": 3,
+      "mispricing_score": 3,
+      "catalyst_score": 4,
+      "risk": "medium",
+      "notes": "Direct exposure to HBM test throughput. Less obvious than memory leaders, but tied to production enablement."
+    },
+    {
+      "ticker": "CAMT",
+      "name": "Camtek",
+      "role": "advanced packaging inspection",
+      "stack_layer": "L1",
+      "market_cap_usd_b": 7.36,
+      "constraint_score": 4,
+      "evidence_score": 4,
+      "consensus_score": 4,
+      "mispricing_score": 4,
+      "catalyst_score": 4,
+      "risk": "medium-high",
+      "notes": "Inspection and metrology exposure to AI packaging complexity. Smaller and more volatile than broader semiconductor equipment names."
+    },
+    {
+      "ticker": "AMKR",
+      "name": "Amkor",
+      "role": "advanced packaging and OSAT capacity",
+      "stack_layer": "L2",
+      "market_cap_usd_b": 18.16,
+      "constraint_score": 3,
+      "evidence_score": 4,
+      "consensus_score": 3,
+      "mispricing_score": 2,
+      "catalyst_score": 4,
+      "risk": "medium",
+      "notes": "Not the smallest name, but meaningful leverage to advanced packaging expansion and AI system buildout."
+    },
+    {
+      "ticker": "ICHR",
+      "name": "Ichor Holdings",
+      "role": "fluid delivery subsystems",
+      "stack_layer": "L2",
+      "market_cap_usd_b": 2.42,
+      "constraint_score": 3,
+      "evidence_score": 3,
+      "consensus_score": 4,
+      "mispricing_score": 4,
+      "catalyst_score": 3,
+      "risk": "high",
+      "notes": "Smaller-cap line item with exposure to semiconductor capex. More of a secondary clue name than a first-layer thesis anchor."
+    },
+    {
+      "ticker": "AEHR",
+      "name": "Aehr Test Systems",
+      "role": "burn-in and wafer-level test",
+      "stack_layer": "L1",
+      "market_cap_usd_b": 2.87,
+      "constraint_score": 3,
+      "evidence_score": 3,
+      "consensus_score": 4,
+      "mispricing_score": 4,
+      "catalyst_score": 3,
+      "risk": "high",
+      "notes": "Small-cap test exposure with meaningful upside if AI-related test intensity broadens, but higher volatility and narrower evidence base."
+    },
+    {
+      "ticker": "UCTT",
+      "name": "Ultra Clean Holdings",
+      "role": "gas and fluid delivery subsystems",
+      "stack_layer": "L2",
+      "market_cap_usd_b": 3.84,
+      "constraint_score": 3,
+      "evidence_score": 3,
+      "consensus_score": 4,
+      "mispricing_score": 3,
+      "catalyst_score": 3,
+      "risk": "high",
+      "notes": "Secondary semiconductor capital-equipment exposure. Useful as a smaller-cap clue name, not the center of the lane."
+    }
+  ],
+  "catalysts": [
+    {
+      "label": "Next quarterly earnings",
+      "type": "earnings",
+      "watch_for": "Lead-time language, AI demand mix, HBM / advanced packaging commentary"
+    },
+    {
+      "label": "Packaging capacity expansion updates",
+      "type": "capacity expansion",
+      "watch_for": "Whether AI packaging investment continues to move from planning into physical deployment"
+    },
+    {
+      "label": "AI server demand visibility",
+      "type": "end-demand",
+      "watch_for": "Whether cloud and enterprise AI factory demand continues to support packaging and test capex"
+    }
+  ]
+}
