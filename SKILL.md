@@ -1,16 +1,17 @@
 ---
-name: ai-supply-chain-bottleneck-hunter
-description: Use when the user wants a repeatable AI/photonics/semiconductor supply-chain research workflow inspired by Serenity (@aleabitoreddit) and Crux Capital, including bottleneck mapping, stack analysis, evidence gathering from reports/news/earnings, directional sector calls, and optional lower-market-cap candidate names only after the thesis is built.
+name: choke-atlas
+description: Use when the user wants a repeatable AI/photonics/semiconductor/crypto market research workflow inspired by Serenity (@aleabitoreddit) and Crux Capital, including bottleneck mapping, stack analysis, evidence gathering from reports/news/earnings/on-chain and protocol data, real-time market checks, directional sector calls, candidate watchlists, and scenario-based entry/exit zones only after the thesis is built.
 ---
 
 # AI Supply Chain Bottleneck Hunter
 
 Use this skill when the user wants to:
 
-- study AI, photonics, semiconductor, datacenter, networking, power, cooling, packaging, or materials supply chains
+- study AI, photonics, semiconductor, datacenter, networking, power, cooling, packaging, materials, or crypto market structure
 - emulate Serenity / Crux style question patterns and research logic
 - turn scattered reports, earnings calls, and industry news into a structured bottleneck thesis
-- identify the next directional lane first, then optionally drill into smaller-cap names
+- identify the next directional lane first, then optionally drill into smaller-cap names or crypto assets
+- combine the thesis with current market data, catalysts, and technical levels to build a scenario-based trade plan
 - create or use a reusable "research agent skill" for bottleneck hunting
 
 This skill mirrors their research stance and question design. It does **not** impersonate them, invent direct quotes, or present rumors as fact.
@@ -26,15 +27,17 @@ The workflow is:
 1. start from a supertrend
 2. map the supply chain or "stack"
 3. find the narrowest physical / qualification / capacity constraint
-4. verify it with cross-source evidence
+4. verify it with cross-source evidence and an evidence score
 5. output a directional lane first
-6. only after that, offer candidate names and weighting logic
+6. only after that, offer candidate stocks/assets, timing logic, and scenario-based entry/exit zones
 
 Default behavior:
 
 - do **not** start by naming stocks
+- do **not** treat crypto like equities; crypto needs market-structure, liquidity, tokenomics, protocol, and derivative checks
 - do **not** ask AI "what should I buy"
 - do use AI to expand search radius, map dependencies, summarize earnings, cross-check bottlenecks, and generate falsification tests
+- when the user asks for current prices, entry zones, exit zones, or "right now", use live/current market sources and show the data timestamp
 
 ## Two Lenses
 
@@ -83,7 +86,10 @@ What to do:
   - management claims
   - inference
   - speculation
+- Always give the thesis an evidence grade before naming companies.
 - Always say what would break the thesis.
+- Do not present entry/exit levels as guaranteed calls. Frame them as scenario-based planning, not personalized financial advice.
+- Never give a current market setup without checking fresh price/news data and stating when the data was observed.
 - When using the two-public-figure style, borrow:
   - their obsession with bottlenecks
   - their habit of asking where the chain breaks
@@ -101,8 +107,10 @@ Treat the workflow as a staged dialogue:
 - L3: evidence chain
 - L4: directional lane
 - L5: lower-market-cap drilldown only after follow-up
+- L6: live market setup only after the thesis and candidate role are clear
+- L7: crypto setup when the user asks for crypto, tokens, BTC/ETH/SOL, miners, DePIN, AI tokens, or crypto market structure
 
-Do not dump all five layers in one response unless the user explicitly asks for a full memo.
+Do not dump all layers in one response unless the user explicitly asks for a full memo or live trading plan.
 
 ### Step 0: Scope Gate
 
@@ -117,7 +125,7 @@ Use these defaults:
 Good scope questions:
 
 - Which supertrend are we underwriting: optical interconnect, packaging, power, cooling, robotics, storage, or something else?
-- Are we hunting a direction first, or do you already want candidate names?
+- Are we hunting a direction first, or should the agent select candidate stocks/assets after building the thesis?
 - Is the goal a basket, a bottleneck name, or a thesis memo?
 
 ### Step 1: Confirm the Supertrend
@@ -230,7 +238,18 @@ Use this evidence hierarchy:
 - medium: reputable industry reporting, broker or market-research summaries
 - weak: social posts and unverified forum claims
 
+Assign an evidence grade:
+
+- A: direct company or customer evidence plus cross-chain confirmation
+- B: credible company evidence plus industry confirmation, but limited cross-chain proof
+- C: plausible industry evidence, but weak company-level confirmation
+- D: mostly inference, social signals, or single-source claims
+
+If the thesis is C or D, say "direction worth validating" instead of treating it as a confirmed bottleneck.
+
 If multiple companies describe the same constraint from different positions in the chain, say so explicitly. That is higher quality than a single-source story.
+
+For deeper validation, read [references/evidence-scorecard.md](references/evidence-scorecard.md).
 
 ### Step 5: Output the Direction First
 
@@ -240,6 +259,7 @@ The first answer should say:
 
 - the next lane worth tracking
 - why now
+- evidence grade
 - what confirms it
 - what breaks it
 - what downstream / upstream companies would feel it first
@@ -249,6 +269,24 @@ This is the main output layer.
 ### Step 6: Only Then Offer Candidate Names
 
 If the user pushes deeper, offer 3-7 names.
+
+If the user does not provide tickers, the agent may select stock or crypto candidates autonomously after the bottleneck thesis exists.
+
+Autonomous candidate selection must:
+
+- define the candidate universe: US-listed, China/HK-listed, global ADRs, crypto majors, AI/DePIN tokens, miners, or user-specified market
+- explain how names were found: supply-chain role, peer set, screen, news/catalyst, or known industry map
+- filter out names with unclear exposure, weak liquidity, stale catalysts, or no clean risk/reward
+- rank surviving names by thesis grade, setup grade, liquidity, catalyst timing, and risk/reward clarity
+- label each name as active setup, watchlist setup, or no-trade
+
+For crypto assets, also check:
+
+- BTC/ETH trend and risk regime
+- spot volume, perpetual futures funding, open interest, and liquidation zones when available
+- tokenomics: unlocks, emissions, circulating supply, FDV, and concentration
+- protocol traction: usage, fees, TVL, active addresses, or network-specific metrics when relevant
+- exchange liquidity and whether the asset is too thin for the user's horizon
 
 Split them by role:
 
@@ -283,6 +321,48 @@ If the user asks for weights, use Crux-style discipline:
 
 Never size purely off narrative upside.
 
+### Step 8: Live Market Setup
+
+Use this step only when the user asks for current行情, timing, entry zones, exit zones, stop/invalidations, or "can I buy now".
+
+Before giving levels:
+
+- use available finance and web sources for current data, and cite sources when live claims appear in the answer
+- fetch current price, daily range, volume, relative volume if available, and market timestamp
+- check the latest company news, filings, earnings date, guidance changes, and sector news
+- check the relevant index / peer basket so the setup is not isolated from market regime
+- identify obvious support, resistance, breakout, pullback, and invalidation levels
+- separate fundamental thesis from technical timing
+
+Output zones, not single magic prices:
+
+- starter zone: where risk/reward first becomes acceptable
+- add zone: where confirmation improves, usually after reclaiming or holding a key level
+- invalidation / stop zone: where the setup is wrong
+- first target: where partial profit-taking or reassessment is rational
+- stretch target: only if the thesis and trend both keep confirming
+
+If live data is unavailable or stale, say so and provide only a framework, not a current setup.
+
+If the user asks for autonomous monitoring, define refresh rules and alert triggers. Do not imply automatic order placement.
+
+For a complete template, read [references/live-market-playbook.md](references/live-market-playbook.md).
+
+### Step 9: Crypto Market Setup
+
+Use this step when the user asks for crypto, BTC, ETH, SOL, AI tokens, DePIN, miners, crypto beta, perpetuals, or token setups.
+
+Crypto setups must separate:
+
+- macro crypto regime: BTC/ETH trend, dominance, liquidity, stablecoin flow if available
+- asset thesis: protocol, tokenomics, narrative, adoption, or infrastructure exposure
+- derivatives/tape: funding, open interest, liquidation clusters, spot/perp divergence when available
+- technical map: support, resistance, reclaim, breakdown, invalidation, and target zones
+
+Do not use equity-only evidence such as earnings or company guidance for tokens. Use protocol docs, tokenomics pages, exchange data, on-chain dashboards, reputable crypto market data, and project announcements.
+
+For a complete template, read [references/crypto-market-playbook.md](references/crypto-market-playbook.md).
+
 ## Output Levels
 
 Choose the shallowest level that satisfies the ask.
@@ -292,6 +372,8 @@ Escalation rule:
 - first response: direction only
 - second response after user follow-up: candidate watchlist
 - third response after user picks one lane or one company: underwrite sheet
+- fourth response when the user asks about timing: live market setup
+- crypto response when the user asks about tokens or crypto market setups
 
 If the user jumps straight to "give me small caps", first give:
 
@@ -348,6 +430,29 @@ Output:
 
 Read [references/output-formats.md](references/output-formats.md) for templates.
 
+### Level 4: Live Market Setup
+
+Use when the user asks:
+
+- what can be bought now
+- where to enter or exit
+- what price level matters
+- whether a candidate is extended, breaking out, or pulling back
+- whether a crypto asset is overextended, reclaiming support, breaking out, or facing unlock/funding risk
+
+Output:
+
+- current data timestamp
+- thesis grade and setup grade
+- current price context
+- entry/add/exit/invalidation zones
+- catalyst calendar
+- what would make the plan stale
+
+Read [references/live-market-playbook.md](references/live-market-playbook.md) before giving a live setup.
+
+For crypto assets, also read [references/crypto-market-playbook.md](references/crypto-market-playbook.md).
+
 ## Recommended Response Skeleton
 
 When answering live user requests, default to this order:
@@ -357,6 +462,7 @@ When answering live user requests, default to this order:
 3. bottleneck call
 4. evidence and disproof
 5. only then names, if requested
+6. only then live entry/exit zones, if requested and current data is available
 
 This prevents the skill from collapsing into ticker spam.
 

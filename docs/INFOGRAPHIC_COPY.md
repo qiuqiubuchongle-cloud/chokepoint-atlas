@@ -2,7 +2,7 @@
 
 ## Title
 
-AI Bottleneck Hunter
+Choke Atlas
 
 ## Subtitle
 
