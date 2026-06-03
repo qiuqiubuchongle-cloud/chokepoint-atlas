@@ -220,6 +220,64 @@ def stack_summary(data: dict, max_layers: int = 5) -> list[str]:
     return [f"{layer['id']}: {layer['label']}" for layer in layers]
 
 
+def compact_quote(record: dict) -> str | None:
+    snippets = record.get("quote_snippets") or []
+    return snippets[0] if snippets else None
+
+
+def build_evidence_trace(evidence: list[dict], companies: list[dict]) -> list[dict]:
+    company_by_name = {company["name"]: company for company in companies}
+    company_by_ticker = {company["ticker"]: company for company in companies}
+    trace = []
+    for record in evidence:
+        company = company_by_name.get(record["entity"]) or company_by_ticker.get(record["entity"])
+        trace.append(
+            {
+                "id": record["id"],
+                "entity": record["entity"],
+                "title": record["title"],
+                "label": record["label"],
+                "tier": record["tier"],
+                "source_type": record.get("source_type"),
+                "source_confidence": record.get("source_confidence", "Medium"),
+                "summary": record["summary"],
+                "quote_snippets": record.get("quote_snippets", []),
+                "signals": record.get("signals", []),
+                "link_reason": record.get("link_reason", "Directly relevant to the current lane."),
+                "linked_company": company["ticker"] if company else None,
+                "linked_role": company["role"] if company else None,
+                "url": record["url"],
+            }
+        )
+    return trace
+
+
+def render_evidence_trace(title: str, evidence_trace: list[dict]) -> str:
+    lines = [f"# Evidence Trace - {title}", ""]
+    for idx, item in enumerate(evidence_trace, start=1):
+        lines.extend(
+            [
+                f"## {idx}. {item['entity']} - {item['title']}",
+                f"- Label: {item['label']}",
+                f"- Confidence: {item['source_confidence']}",
+                f"- Source type: {item.get('source_type', 'unknown')}",
+                f"- Link reason: {item['link_reason']}",
+            ]
+        )
+        if item.get("linked_company"):
+            lines.append(f"- Linked company: {item['linked_company']} ({item.get('linked_role', 'n/a')})")
+        if item.get("signals"):
+            lines.append(f"- Signals: {', '.join(item['signals'])}")
+        lines.extend(["", "### Summary", item["summary"]])
+        snippets = item.get("quote_snippets", [])
+        if snippets:
+            lines.extend(["", "### Quote Snippets"])
+            for snippet in snippets:
+                lines.append(f"> {snippet}")
+        lines.extend(["", f"Source: {item['url']}", ""])
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def render_quick_scan(data: dict, evidence: list[dict], lane_scores: dict) -> str:
     thesis = data["thesis"]
     strongest = strongest_evidence(evidence)
@@ -243,14 +301,18 @@ def render_quick_scan(data: dict, evidence: list[dict], lane_scores: dict) -> st
         for item in bottlenecks:
             lines.append(f"- {item['label']} ({item['type']}): {item['why_it_matters']}")
     if strongest:
+        quote = compact_quote(strongest)
         lines.extend(
             [
                 "",
                 "## Strongest Evidence",
                 f"- [{strongest['label']}] {strongest['entity']} - {strongest['summary']}",
+                f"- Confidence: {strongest.get('source_confidence', 'Medium')}",
                 f"- Source: {strongest['url']}",
             ]
         )
+        if quote:
+            lines.append(f'- Quote: "{quote}"')
     lines.extend(
         [
             "",
@@ -296,7 +358,14 @@ def render_evidence_memo(data: dict, evidence: list[dict], lane_scores: dict, to
         ]
     )
     for item in evidence:
-        lines.append(f"- [{item['label']}] {item['entity']} - {item['summary']} ({item['url']})")
+        lines.append(
+            f"- [{item['label']}] {item['entity']} - {item['summary']} ({item['url']}) | confidence: {item.get('source_confidence', 'Medium')}"
+        )
+        if item.get("link_reason"):
+            lines.append(f"  - link reason: {item['link_reason']}")
+        quote = compact_quote(item)
+        if quote:
+            lines.append(f'  - quote: "{quote}"')
     lines.extend(
         [
             "",
@@ -391,6 +460,8 @@ def build_scorecard(data: dict, lane_scores: dict, top_companies: list[dict]) ->
                     "total_average": name_total,
                 },
                 "risk": company["risk"],
+                "source_confidence": company.get("source_confidence"),
+                "evidence_count": company.get("evidence_count"),
             }
         )
     return {
@@ -450,6 +521,7 @@ def build_research_pack(data: dict) -> dict:
     mermaid = render_mermaid_graph(graph)
     top_companies = top_names(data.get("companies", []))
     scorecard = build_scorecard(data, lane_scores, top_companies)
+    evidence_trace = build_evidence_trace(evidence, data.get("companies", []))
     research_pack = {
         "meta": data["meta"],
         "thesis": data["thesis"],
@@ -457,6 +529,7 @@ def build_research_pack(data: dict) -> dict:
         "lane_priority": lane_priority(lane_scores["total_average"]),
         "top_names": top_companies,
         "evidence": evidence,
+        "evidence_trace": evidence_trace,
         "graph_summary": {"nodes": len(graph["nodes"]), "edges": len(graph["edges"])},
         "catalysts": data.get("catalysts", []),
     }
@@ -468,6 +541,7 @@ def build_research_pack(data: dict) -> dict:
         "mermaid": mermaid,
         "top_companies": top_companies,
         "scorecard": scorecard,
+        "evidence_trace": evidence_trace,
         "research_pack": research_pack,
     }
 
@@ -497,11 +571,13 @@ def main() -> None:
     write_json(output_dir / "research_pack.json", bundle["research_pack"])
     write_json(output_dir / "graph.json", bundle["graph"])
     write_json(output_dir / "scorecard.json", bundle["scorecard"])
+    write_json(output_dir / "evidence_trace.json", bundle["evidence_trace"])
     write_text(output_dir / "quick_scan.md", render_quick_scan(data, bundle["evidence"], bundle["lane_scores"]))
     write_text(
         output_dir / "evidence_memo.md",
         render_evidence_memo(data, bundle["evidence"], bundle["lane_scores"], bundle["top_companies"]),
     )
+    write_text(output_dir / "evidence_trace.md", render_evidence_trace(data["meta"]["title"], bundle["evidence_trace"]))
     write_text(output_dir / "graph_card.md", render_graph_card(data, bundle["graph"]))
     write_text(output_dir / "catalyst_watch.md", render_catalyst_watch(data, bundle["top_companies"]))
     write_text(output_dir / "graph.mmd", bundle["mermaid"])

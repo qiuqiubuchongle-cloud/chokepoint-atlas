@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from build_research_pack import build_research_pack, render_catalyst_watch, render_evidence_memo, render_graph_card, render_mermaid_markdown, render_quick_scan, write_json, write_text
+from build_research_pack import build_research_pack, render_catalyst_watch, render_evidence_memo, render_evidence_trace, render_graph_card, render_mermaid_markdown, render_quick_scan, write_json, write_text
 from extract_sources_to_pack import build_draft_pack, ensure_dir, load_json
 
 
@@ -35,11 +35,13 @@ def main() -> None:
     write_json(final_dir / "research_pack.json", bundle["research_pack"])
     write_json(final_dir / "graph.json", bundle["graph"])
     write_json(final_dir / "scorecard.json", bundle["scorecard"])
+    write_json(final_dir / "evidence_trace.json", bundle["evidence_trace"])
     write_text(final_dir / "quick_scan.md", render_quick_scan(draft_pack, bundle["evidence"], bundle["lane_scores"]))
     write_text(
         final_dir / "evidence_memo.md",
         render_evidence_memo(draft_pack, bundle["evidence"], bundle["lane_scores"], bundle["top_companies"]),
     )
+    write_text(final_dir / "evidence_trace.md", render_evidence_trace(draft_pack["meta"]["title"], bundle["evidence_trace"]))
     write_text(final_dir / "graph_card.md", render_graph_card(draft_pack, bundle["graph"]))
     write_text(final_dir / "catalyst_watch.md", render_catalyst_watch(draft_pack, bundle["top_companies"]))
     write_text(final_dir / "graph.mmd", bundle["mermaid"])

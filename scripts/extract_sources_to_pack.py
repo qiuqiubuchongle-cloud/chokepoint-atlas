@@ -31,6 +31,13 @@ SIGNAL_PATTERNS = [
     (r"\b(liquid cooling|cooling|power)\b", "power and cooling"),
 ]
 
+CONFIDENCE_BY_LABEL = {
+    "Confirmed": "High",
+    "Inferred": "Medium",
+    "Weak": "Low",
+    "Needs verification": "Very low",
+}
+
 
 def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -62,6 +69,14 @@ def summarize_body(body: str, max_chars: int = 220) -> str:
     return cut + "..."
 
 
+def split_sentences(text: str) -> list[str]:
+    cleaned = " ".join(text.split())
+    if not cleaned:
+        return []
+    parts = re.split(r"(?<=[\.\!\?])\s+", cleaned)
+    return [part.strip() for part in parts if part.strip()]
+
+
 def extract_signals(text: str) -> list[str]:
     found = []
     lower = text.lower()
@@ -69,6 +84,43 @@ def extract_signals(text: str) -> list[str]:
         if re.search(pattern, lower):
             found.append(label)
     return sorted(set(found))
+
+
+def extract_quote_snippets(body: str, signals: list[str], max_snippets: int = 2, max_chars: int = 180) -> list[str]:
+    sentences = split_sentences(body)
+    if not sentences:
+        return []
+
+    selected: list[str] = []
+    signal_terms = {signal.lower() for signal in signals}
+
+    for sentence in sentences:
+        lower = sentence.lower()
+        if any(term in lower for term in signal_terms):
+            selected.append(sentence)
+        if len(selected) >= max_snippets:
+            break
+
+    if not selected:
+        selected = sentences[:max_snippets]
+
+    trimmed = []
+    for sentence in selected:
+        if len(sentence) <= max_chars:
+            trimmed.append(sentence)
+        else:
+            trimmed.append(sentence[:max_chars].rsplit(" ", 1)[0].strip() + "...")
+    return trimmed
+
+
+def build_link_reason(entity: str, signals: list[str], company_role: str | None = None) -> str:
+    if company_role and signals:
+        return f"{entity} is linked because the source directly mentions {', '.join(signals[:3])}, which supports its role as {company_role}."
+    if signals:
+        return f"{entity} is linked because the source explicitly points to {', '.join(signals[:3])}."
+    if company_role:
+        return f"{entity} is linked because the source is a primary-source mention relevant to its role as {company_role}."
+    return f"{entity} is linked because the source is directly relevant to the current lane."
 
 
 def infer_evidence_score(label: str) -> int:
@@ -95,36 +147,53 @@ def infer_constraint_score(company: dict, aggregated_signals: list[str]) -> int:
     return 3
 
 
-def build_evidence_records(sources: list[dict]) -> tuple[list[dict], dict]:
+def infer_evidence_score_from_records(entity_records: list[dict]) -> int:
+    if not entity_records:
+        return 3
+    score_map = {"High": 5, "Medium": 4, "Low": 2, "Very low": 1}
+    values = [score_map.get(record.get("source_confidence", "Medium"), 3) for record in entity_records]
+    return max(round(sum(values) / len(values)), 1)
+
+
+def build_evidence_records(sources: list[dict], companies: list[dict] | None = None) -> tuple[list[dict], dict, dict]:
     evidence = []
     entity_signals: dict[str, set[str]] = {}
+    entity_records: dict[str, list[dict]] = {}
+    company_roles = {company["name"]: company.get("role") for company in (companies or [])}
     for idx, source in enumerate(sources, start=1):
         tier, label = normalize_source_type(source["source_type"])
         summary = summarize_body(source["body"])
         signals = extract_signals(source["title"] + " " + source["body"])
+        snippets = extract_quote_snippets(source["body"], signals)
+        source_confidence = CONFIDENCE_BY_LABEL[label]
+        link_reason = build_link_reason(source["entity"], signals, company_roles.get(source["entity"]))
         entity_signals.setdefault(source["entity"], set()).update(signals)
-        evidence.append(
-            {
-                "id": f"ev_{slugify(source['entity'])}_{idx}",
-                "tier": tier,
-                "label": label,
-                "source_type": source["source_type"],
-                "entity": source["entity"],
-                "title": source["title"],
-                "summary": summary,
-                "url": source["url"],
-                "signals": signals,
-            }
-        )
+        record = {
+            "id": f"ev_{slugify(source['entity'])}_{idx}",
+            "tier": tier,
+            "label": label,
+            "source_type": source["source_type"],
+            "entity": source["entity"],
+            "title": source["title"],
+            "summary": summary,
+            "url": source["url"],
+            "signals": signals,
+            "quote_snippets": snippets,
+            "source_confidence": source_confidence,
+            "link_reason": link_reason,
+        }
+        evidence.append(record)
+        entity_records.setdefault(source["entity"], []).append(record)
     entity_signals = {k: sorted(v) for k, v in entity_signals.items()}
-    return evidence, entity_signals
+    return evidence, entity_signals, entity_records
 
 
-def build_company_records(companies: list[dict], entity_signals: dict[str, list[str]]) -> list[dict]:
+def build_company_records(companies: list[dict], entity_signals: dict[str, list[str]], entity_records: dict[str, list[dict]]) -> list[dict]:
     out = []
     for company in companies:
         signals = entity_signals.get(company["name"], [])
-        evidence_score = infer_evidence_score("Confirmed") if signals else 3
+        records = entity_records.get(company["name"], [])
+        evidence_score = infer_evidence_score_from_records(records)
         catalyst_score = infer_catalyst_score(signals)
         out.append(
             {
@@ -140,6 +209,8 @@ def build_company_records(companies: list[dict], entity_signals: dict[str, list[
                 "catalyst_score": catalyst_score,
                 "risk": company["risk"],
                 "notes": f"Signals: {', '.join(signals) if signals else 'no extracted signals'}",
+                "source_confidence": records[0]["source_confidence"] if records else "Medium",
+                "evidence_count": len(records),
             }
         )
     return out
@@ -176,8 +247,8 @@ def build_catalysts(entity_signals: dict[str, list[str]]) -> list[dict]:
 
 
 def build_draft_pack(payload: dict) -> tuple[dict, dict]:
-    evidence, entity_signals = build_evidence_records(payload.get("sources", []))
-    companies = build_company_records(payload.get("companies", []), entity_signals)
+    evidence, entity_signals, entity_records = build_evidence_records(payload.get("sources", []), payload.get("companies", []))
+    companies = build_company_records(payload.get("companies", []), entity_signals, entity_records)
     catalysts = build_catalysts(entity_signals)
 
     draft_pack = {
@@ -196,6 +267,13 @@ def build_draft_pack(payload: dict) -> tuple[dict, dict]:
         "evidence_count": len(evidence),
         "companies_count": len(companies),
         "entity_signals": entity_signals,
+        "quote_coverage": {
+            record["id"]: len(record.get("quote_snippets", [])) for record in evidence
+        },
+        "entity_confidence": {
+            entity: records[0]["source_confidence"] if records else "Medium"
+            for entity, records in entity_records.items()
+        },
     }
 
     return draft_pack, extraction_report

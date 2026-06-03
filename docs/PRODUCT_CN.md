@@ -1,135 +1,118 @@
-# Chokepoint Atlas - 产品说明
+# Chokepoint Atlas 产品说明
 
-## 一句话先讲明白
+## 这东西现在到底是干嘛的
 
-这是一个给 Agent 用的投研 skill。
+这是一个研究 AI 基础设施瓶颈的产品。
 
-它不负责上来就给你股票代码。
+它不负责上来就给你一堆股票代码。
 
-它负责先把一个大主题拆开，找出真正卡脖子的地方，再告诉你哪些公司值得继续看。
+它负责先把一个大主题拆开，找到真正可能卡脖子的地方，再把证据、关系图、优先级和候选公司整理成一套研究包。
 
-你可以把它理解成：
+一句话说：
 
-**一个专门研究 AI 供应链瓶颈的分析助手。**
+**它是一个把“AI 叙事”翻译成“供应链研究”的分析流水线。**
 
-## 它到底是干嘛的
+---
 
-很多人聊 AI，只会聊最热的那几个名字。
+## 现在的产品逻辑
 
-但真正有研究价值的问题，通常是这个：
+产品逻辑其实很简单，可以拆成 4 步。
 
-**如果 AI 继续扩张，最先不够用的会是哪一环？**
+### 1. 先定一个真实系统
 
-比如可能卡在：
+不是空谈“AI 会涨”“算力会爆发”。
 
-- 光模块
-- 激光器
-- 衬底材料
-- 封装
-- 电力
-- 散热
+而是先指定一个真实系统，比如：
 
-这个 skill 做的事，就是帮你把这些环节一层层拆出来，然后判断：
+- NVIDIA DSX AI Factory
+- TPU pod
+- 先进封装链条
+- 数据中心供电和液冷
 
-1. 哪一层最重要
-2. 哪一层最容易卡住
-3. 这个卡点是真的，还是市场自己讲出来的故事
-4. 真正离这个卡点最近的公司是谁
+先有机器，后有供应链。
 
-## 它不是干嘛的
+### 2. 再拆供应链栈
 
-它不是：
+把这个系统往下拆：
 
-- 直接报明牌的选股器
-- 短线喊单工具
-- 问一句“买什么”就出答案的 magic prompt
+- 最终需求
+- 系统集成
+- 核心部件
+- 测试与封装
+- 材料与上游
 
-如果你只想让它上来吐股票代码，那这个 skill 不适合。
+这一步的目的，是把“大家都在聊的热闹”拆成一张真正能研究的结构图。
 
-它是先讲逻辑，再给名单。
+### 3. 找卡点，再找证据
 
-## 它怎么工作
+它不是先问“哪只票会涨”。
 
-它的流程固定是这样的：
+它先问：
 
-### 第一步：先定主题
+**如果需求继续放大，哪一层会先堵车？**
 
-先确定你研究的是哪条线。
-
-比如：
-
-- AI 光通信
-- AI 数据中心供电
-- 先进封装
-- 液冷和热管理
-- 人形机器人供应链
-
-### 第二步：拆供应链
-
-把这个主题拆成一层层环节。
-
-不是停留在“这个赛道很火”，而是往下拆：
-
-- 最终需求是什么
-- 中间系统是什么
-- 核心零件是什么
-- 上游材料是什么
-
-### 第三步：找卡点
-
-然后问一个最关键的问题：
-
-**如果需求突然翻倍，最先扛不住的是谁？**
-
-这个“扛不住”可能是：
-
-- 产能跟不上
-- 认证周期太长
-- 替代品太少
-- 良率太低
-- 电和热已经到极限
-
-### 第四步：查证据
-
-不是看一条推文就下结论。
-
-它会优先找这些东西：
+然后再去拉证据：
 
 - 财报
 - 电话会
-- 官方披露
-- 行业新闻
-- 供应商和客户的公开信息
+- 官方产品页
+- 新闻
+- 研报摘要
 
-最后把结论分清楚：
+并且把这些证据结构化，分成：
 
-- 哪些是已经确认的
-- 哪些是根据信息推出来的
-- 哪些还只是猜测
+- evidence label
+- signal
+- quote snippet
+- source confidence
+- link reason
 
-### 第五步：先给方向，再给名字
+也就是不只告诉你“结论是什么”，还告诉你“这句判断是从哪来的”。
 
-默认情况下，它先告诉你：
+### 4. 最后输出研究包
 
-- 现阶段最值得看的方向是什么
-- 为什么是这个方向
-- 风险点在哪
+最终不是只吐一段分析，而是产出一整套可复用研究结果，比如：
 
-如果你继续追问，它才会给你公司名单。
-
-## 现在这个产品已经能跑什么
-
-除了对话式 skill，现在仓库里已经补了一个 **本地可跑的 MVP**。
+- `quick_scan.md`
+- `evidence_memo.md`
+- `evidence_trace.md`
+- `graph.json`
+- `graph_mermaid.md`
+- `scorecard.json`
+- `catalyst_watch.md`
 
 你可以把它理解成：
 
-**先把研究结果整理成标准输入，再一键生成整套研究包。**
+**从主题输入，到结构化研究，再到交付物输出。**
 
-目前能直接产出的文件包括：
+---
+
+## 它现在有哪几种用法
+
+现在这个产品已经有 3 条主要入口。
+
+### 用法一：单条 thesis 研究包
+
+适合：
+
+- 已经知道自己要研究哪条线
+- 想直接生成一套标准研究包
+
+脚本：
+
+`scripts/build_research_pack.py`
+
+示例输入：
+
+`examples/ai_factory_lane_input.json`
+
+输出包括：
 
 - `research_pack.json`
 - `quick_scan.md`
 - `evidence_memo.md`
+- `evidence_trace.json`
+- `evidence_trace.md`
 - `graph.json`
 - `graph.mmd`
 - `graph_mermaid.md`
@@ -138,128 +121,88 @@
 - `validation_report.json`
 - `catalyst_watch.md`
 
-这意味着它已经不只是“会回答问题”。
+---
 
-它开始具备一点真正产品的味道了：
+### 用法二：多条 lane 横向比较
 
-- 有输入格式
-- 有统一输出
-- 有研究包沉淀
-- 有图谱和评分底稿
+适合：
 
-## 本地怎么跑
+- 不只研究一条线
+- 想比较哪条线更值得深挖
+- 想看优先级排序
 
-仓库里已经带了一个 demo 输入：
+脚本：
 
-`examples/ai_factory_lane_input.json`
+`scripts/compare_lanes.py`
 
-直接运行：
-
-```bash
-python3 scripts/build_research_pack.py \
-  --input examples/ai_factory_lane_input.json \
-  --output out/ai_factory_demo
-```
-
-跑完之后，你会在输出目录看到整套研究包：
-
-`out/ai_factory_demo/`
-
-这个 demo 目前演示的是：
-
-- 终端系统：`NVIDIA DSX AI Factory`
-- 研究方向：`HBM 测试 + 先进封装支撑工具`
-- 输出内容：证据分层、关系图、优先级、催化剂
-
-另外现在还多了两个比较实用的小升级：
-
-- 自动做输入校验，生成 `validation_report.json`
-- 自动把 `graph.json` 转成 Mermaid，可直接继续做图
-
-## 现在还支持多条 lane 横向比较
-
-如果你不是只研究一条线，而是想比较：
-
-- 哪条线更值得深挖
-- 哪条线证据更硬
-- 哪条线只是热闹，哪条线更像真瓶颈
-
-现在可以直接用多 lane compare 入口。
-
-仓库里已经带了一个比较输入：
+示例输入：
 
 `examples/lane_compare_input.json`
 
-运行方式：
-
-```bash
-python3 scripts/compare_lanes.py \
-  --input examples/lane_compare_input.json \
-  --output out/lane_compare_demo
-```
-
-它会生成：
+输出包括：
 
 - `lane_ranking.json`
 - `lane_details.json`
 - `ranked_lane_table.md`
 - `lane_compare_memo.md`
 
-这一步的意义很大，因为它开始把“研究一条 thesis”升级成“比较多个 thesis”。
+这条入口的核心意义是：
 
-## 现在还支持 source bundle 一键流水线
+**从研究一条 thesis，升级到比较多个 thesis。**
 
-如果你已经有一批原始材料，比如：
+---
 
-- 财报摘要
-- 官方产品页
-- 新闻段落
-- IR 文本
+### 用法三：source bundle 一键流水线
 
-你现在不一定要先手动把它们全改成最终 pack JSON。
+适合：
 
-仓库里已经补了一个更顺手的入口：
+- 手上已经有一批原始材料
+- 不想手动先整理成最终 pack JSON
+- 想从材料直接跑到研究包
+
+脚本：
+
+`scripts/run_source_pipeline.py`
+
+示例输入：
 
 `examples/source_bundle_input.json`
 
-先把这些原始材料整理成一个 source bundle，然后直接运行：
+输出分两层：
 
-```bash
-python3 scripts/run_source_pipeline.py \
-  --input examples/source_bundle_input.json \
-  --output out/source_pipeline_demo
-```
-
-它会自动帮你分两步输出：
-
-### 第一步：草稿输入
+#### 第一层：草稿输入
 
 目录：
 
-`out/source_pipeline_demo/01_draft/`
+`01_draft/`
 
 产物：
 
 - `draft_pack_input.json`
 - `extraction_report.json`
 
-这一层做的事是：
+这一层做的事：
 
-- 把 source bundle 里的材料转成结构化 evidence
-- 自动抽一些基础 signal
-- 给公司补一版初始评分字段
+- 从 source bundle 里抽 evidence
+- 抽 signal
+- 抽 quote snippet
+- 给 source 打 confidence
+- 给 evidence 补 link reason
+- 给公司补初始评分字段
 
-### 第二步：最终研究包
+#### 第二层：最终研究包
 
 目录：
 
-`out/source_pipeline_demo/02_final_pack/`
+`02_final_pack/`
 
 产物：
 
 - `research_pack.json`
 - `quick_scan.md`
 - `evidence_memo.md`
+- `evidence_trace.json`
+- `evidence_trace.md`
 - `graph.json`
 - `graph.mmd`
 - `graph_mermaid.md`
@@ -268,158 +211,114 @@ python3 scripts/run_source_pipeline.py \
 - `validation_report.json`
 - `catalyst_watch.md`
 
-这条链路的意义特别直接：
+这条链路最重要的地方在于：
 
-**你不用再手动接两次脚本了。**
+**它已经不只是一个会回答问题的 skill，而是一个会整理研究证据、沉淀研究包的流水线。**
 
-它已经开始像一个真正的研究流水线，而不是几段分散工具。
+---
 
-## 这个 MVP 适合拿来干嘛
+## 它和普通“问 AI 买什么”有什么不同
 
-最适合三件事：
+普通玩法是：
 
-### 1. 做研究底稿
+- 问 AI 哪只票好
+- 问 AI 帮我总结一下
+- 问 AI 这个赛道有没有机会
 
-先把一个赛道的核心关系整理进 JSON，再让脚本吐出统一结构。
+这个产品不这么干。
 
-### 2. 给别的 Agent 接手
+它的顺序是：
 
-很多时候问题不是不会研究，而是每个 Agent 产出的格式都不一样。
+1. 先定系统
+2. 再画栈
+3. 再找瓶颈
+4. 再拉证据
+5. 最后才给方向、公司和优先级
 
-现在有了统一的 pack 结构，后续不管是写长推、做信息图，还是继续深挖单票，都会顺很多。
+差别就在这里：
 
-### 3. 做后续产品迭代
+**它不是让 AI 代替你拍脑袋，而是让 AI 帮你把研究流程做扎实。**
 
-后面如果要加：
+---
 
-- 新闻抽取
-- 财报抽取
-- 图谱可视化
-- lane 对 lane 比较
+## 现在这版产品最有价值的地方
 
-都可以直接接在这个 MVP 上面，不用重新推翻。
+我觉得当前版本最值钱的是这 4 点：
 
-## 你会得到什么结果
+### 1. 结构统一
 
-正常情况下，它会分 3 层输出。
+不管是单条 thesis，还是多条 lane，对外输出格式都比较统一。
 
-### 1. 方向判断
+### 2. 证据不再只是摘要
 
-先告诉你：
+现在已经能保留：
 
-- 现在该重点看哪条线
-- 真正的瓶颈在哪
-- 为什么这个判断成立
-- 什么情况会让这个判断失效
+- quote snippet
+- source confidence
+- link reason
 
-### 2. 候选名单
+也就是开始有“证据链”的味道了。
 
-如果你要名字，它不会乱给一堆。
+### 3. 图谱已经能落地
 
-它会分组给你，比如：
+现在不只是写文字，还能输出：
 
-- 成熟执行者
-- 真正卡脖子的公司
-- 二阶受益者
-- 早期高波动选手
+- `graph.json`
+- `graph.mmd`
+- `graph_mermaid.md`
 
-这样你一眼就知道，哪些更稳，哪些更像赔率票。
+后面做可视化会轻松很多。
 
-### 3. 单家公司深挖
+### 4. 已经能比较优先级
 
-如果你只想看一家公司，它也可以单独拆：
+不只是分析一条线，而是能比较多条线的研究价值。
 
-- 这家公司到底卖什么
-- 它在整条链里站哪一层
-- 为什么它难替代
-- 现在证据强不强
-- 哪些地方最容易打脸
+---
 
-## 这个 skill 适合谁
+## 它适合谁
 
 适合：
 
 - 想认真研究 AI 基础设施的人
 - 想把投研流程交给 Agent 的人
-- 不想只听热门故事，想看真实供应链的人
+- 想把零散材料变成结构化研究的人
+- 想做长推、信息图、研究 memo 底稿的人
 
 不太适合：
 
-- 只想要短线代码的人
-- 只看情绪不看基本面的玩法
-- 不愿意先看逻辑、只想直接要答案的人
+- 只想直接抄股票代码的人
+- 只看情绪和热度的人
+- 想让 AI 替自己做短线决策的人
 
-## 怎么安装
+---
 
-如果你要让别的 Agent 直接安装这个 skill，用这个命令：
+## 现在还没做完的地方
 
-```bash
-python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
-  --repo qiuqiubuchongle-cloud/chokepoint-atlas \
-  --path . \
-  --name ai-supply-chain-bottleneck-hunter
-```
+这版已经很像一个产品了，但还没有完全做满。
 
-如果默认下载方式报错，再用这个：
+目前最值得继续补的两块是：
 
-```bash
-python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
-  --repo qiuqiubuchongle-cloud/chokepoint-atlas \
-  --path . \
-  --name ai-supply-chain-bottleneck-hunter \
-  --method git
-```
+### 1. 更细的证据抽取
 
-装完以后，重启 Codex。
+比如：
 
-## 怎么问，最省事
+- 发布时间
+- 域名来源
+- claim 类型
+- quote offset
 
-你可以直接复制这几种问法。
+### 2. 图谱和证据联动
 
-### 问法 1：只要方向，不要名字
+也就是在图上直接点到证据原句和出处。
 
-```text
-Use $ai-supply-chain-bottleneck-hunter.
-告诉我下一个 AI 基础设施瓶颈可能在哪。
-先只讲方向，不要先给股票代码。
-```
+这两块一补上，产品感会更强。
 
-### 问法 2：逻辑讲完，再给名单
+---
 
-```text
-Continue with $ai-supply-chain-bottleneck-hunter.
-现在给我几个公司，分成：
-1. 成熟执行者
-2. 真瓶颈公司
-3. 二阶受益者
-4. 早期高波动标的
-```
+## 最后一句
 
-### 问法 3：单独看一家公司
+Chokepoint Atlas 现在不是一个“给我几个代码”的 prompt。
 
-```text
-Use $ai-supply-chain-bottleneck-hunter to analyze AXTI.
-告诉我它在供应链里处于哪一层，为什么重要，什么情况会打脸。
-```
+它更像一个：
 
-## 为什么它有用
-
-普通人用 AI 做投研，很容易变成一件事：
-
-问 AI 要答案。
-
-这个 skill 更像是在逼 AI 先把问题问对。
-
-因为很多时候，不是你信息太少。
-
-是你一开始问的问题就问偏了。
-
-这个 skill 的价值就在这：
-
-**先把方向问对，再谈公司。**
-
-## 最后一句总结
-
-这不是一个“给我代码”的 prompt。
-
-这是一个把 AI 叙事拆成真实供应链，再把真实供应链拆成可研究方向的 skill。
+**把 AI 叙事拆成真实供应链，再把真实供应链整理成研究证据和交付物的产品。**
